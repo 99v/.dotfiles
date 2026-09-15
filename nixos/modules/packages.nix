@@ -6,12 +6,22 @@
 
 {
   nixpkgs.config.allowUnfree = true;
+  nix.package = pkgs.lixPackageSets.stable.lix;
 
   nixpkgs.overlays = [
     (final: prev: {
       llama-cpp = prev.llama-cpp.override {
         openclSupport = true;
       };
+    })
+
+    (final: prev: {
+      inherit (prev.lixPackageSets.stable)
+        nixpkgs-review
+        nix-eval-jobs
+        nix-fast-build
+        colmena
+        ;
     })
   ];
 
